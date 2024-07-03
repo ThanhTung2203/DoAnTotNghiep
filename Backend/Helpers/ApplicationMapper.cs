@@ -12,7 +12,7 @@ namespace Backend.Helpers
             CreateMap<Product,ProductDto>().ReverseMap();
             CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<Voucher, VoucherDto>().ReverseMap();
-
+            CreateMap<CartItem, CartItemDto>().ReverseMap();
         }
     }
 }

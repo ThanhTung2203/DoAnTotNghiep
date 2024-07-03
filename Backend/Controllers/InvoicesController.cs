@@ -1,7 +1,12 @@
-﻿using Backend.Interfaces;
+﻿using AutoMapper;
+using Backend.Dto;
+using Backend.Helpers;
+using Backend.Interfaces;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Backend.Controllers
 {
@@ -9,24 +14,28 @@ namespace Backend.Controllers
     [ApiController]
     public class InvoicesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IInvoiceRepository _invoiceRepo;
-        public InvoicesController(IInvoiceRepository invoiceRepo)
+        public InvoicesController(IInvoiceRepository invoiceRepo,IMapper mapper)
         {
+            _mapper = mapper;
             _invoiceRepo = invoiceRepo;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllInvoives()
+        public async Task<List<Invoice>> GetAllInvoicesAsync()
         {
-            await _invoiceRepo.GetAllInvoicesAsync();
-            return Ok();
+            return await _invoiceRepo.GetAllInvoicesAsync();
+             
         }
         [HttpGet("{id}")]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult>GetInvoiceId(int id)
         {
             await _invoiceRepo.GetInvoiceByIdAsync(id);
             return Ok();
         }
         [HttpPost]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult>AddInvoice(Invoice invoice)
         {
             var invoiceExist = await _invoiceRepo.InvoiceExist(invoice.Id);
@@ -38,6 +47,7 @@ namespace Backend.Controllers
             return Ok("Thêm thành công!");
         }
         [HttpPut]
+
         public async Task<IActionResult>UpdateInvoice(int id,Invoice invoice)
         {
             try
@@ -56,6 +66,7 @@ namespace Backend.Controllers
             }
         }
         [HttpDelete]
+        [Authorize(Roles = ApplicationRole.Admin )]
         public async Task<IActionResult>DeleteInvoice(int id)
         {
             try

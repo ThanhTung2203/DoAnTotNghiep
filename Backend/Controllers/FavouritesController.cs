@@ -1,7 +1,10 @@
-﻿using Backend.Interfaces;
+﻿using Backend.Helpers;
+using Backend.Interfaces;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Backend.Controllers
 {
@@ -14,19 +17,21 @@ namespace Backend.Controllers
         {
             _favouriteRepository = faouriteRepo;
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<List<Favourite>> GetAllFavouritesAsync()
         {
            return await _favouriteRepository.GetAllFavouritesAsync();
             
         }
-        [HttpPost("{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetFavouriteByIdAsync(int id)
         {
             await _favouriteRepository.GetFavouriteByIdAsync(id);
             return Ok();
         }
-        [HttpGet]
+        [HttpPost]
+        [AllowAnonymous]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult>AddFavoritesAsync(Favourite favourite)
         {
             try
@@ -40,6 +45,8 @@ namespace Backend.Controllers
             }
         }
         [HttpPut]
+        [AllowAnonymous]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult>UpdateFavouritesAsync(Favourite favourite)
         {
             try
@@ -53,6 +60,8 @@ namespace Backend.Controllers
             }
         }
         [HttpDelete]
+        [AllowAnonymous]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult>DeleFavouritesAsync(int id)
         {
             try

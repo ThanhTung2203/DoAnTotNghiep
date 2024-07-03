@@ -1,8 +1,11 @@
-﻿using Backend.Interfaces;
+﻿using Backend.Helpers;
+using Backend.Interfaces;
 using Backend.Models;
 using Backend.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Backend.Controllers
 {
@@ -16,16 +19,21 @@ namespace Backend.Controllers
             _categoryRepo=categoryRepo;
         }
         [HttpGet]
+        [AllowAnonymous]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IEnumerable<Category>> GetAll()
         {
            return await _categoryRepo.GetAllCategoriesAsync();
         }
         [HttpGet("{id}")]
+        [AllowAnonymous]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<Category> GetCategoryByIdAsync(int id)
         {
             return await _categoryRepo.GetCategoryByIdAsync(id);
         }
         [HttpPost]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task AddCategory(Category category)
         {
             try
@@ -38,6 +46,7 @@ namespace Backend.Controllers
             }
         }
         [HttpPut]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task UpdateCategoryAsync(Category category)
         {
             try
@@ -50,15 +59,17 @@ namespace Backend.Controllers
             }
         }
         [HttpDelete]
-        public async Task DeleteCategoryAsync(int id)
+        [Authorize(Roles = ApplicationRole.Admin)]
+        public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
             try
             {
                 await _categoryRepo.DeleteCategoryAsync(id);
+                return Ok("Xoa thanh cong");
             }
             catch(Exception ex)
             {
-                BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 

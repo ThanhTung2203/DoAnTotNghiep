@@ -8,7 +8,9 @@ D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Backend.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Backend.pdb
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\AutoMapper.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Humanizer.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\MailKit.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -32,14 +34,17 @@ D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.OpenApi.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\MimeKit.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Formats.Asn1.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Security.Permissions.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\System.Windows.Extensions.dll
@@ -53,6 +58,7 @@ D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Mi
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\tung\DoAnTotNghiep\Backend\obj\Debug\net6.0\Backend.csproj.AssemblyReference.cache
@@ -71,3 +77,4 @@ D:\tung\DoAnTotNghiep\Backend\obj\Debug\net6.0\refint\Backend.dll
 D:\tung\DoAnTotNghiep\Backend\obj\Debug\net6.0\Backend.pdb
 D:\tung\DoAnTotNghiep\Backend\obj\Debug\net6.0\Backend.genruntimeconfig.cache
 D:\tung\DoAnTotNghiep\Backend\obj\Debug\net6.0\ref\Backend.dll
+D:\tung\DoAnTotNghiep\Backend\bin\Debug\net6.0\Newtonsoft.Json.dll

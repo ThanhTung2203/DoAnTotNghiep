@@ -4,7 +4,9 @@ using Backend.Dto;
 using Backend.Interfaces;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Backend.Repository
 {
@@ -22,30 +24,20 @@ namespace Backend.Repository
         }
         public async Task<int> AddProductAsync([FromForm]Product product)
         {
-            //var newProdct=_mapper.Map<Product>(product);
-            //_context.Products.Add(newProdct);
-            //await _context.SaveChangesAsync();
-            //return newProdct.Id;
-
-            //
-
-            product.Image = "";
-            //var newProdct = _mapper.Map<Product>(product);
+            //product.Image = "";
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
-            if (product.ImageFile != null)
+            if (product.ImageFile != null && product.ImageFile.Length > 0)
             {
-                var fileName = product.Id.ToString() + Path.GetExtension(product.ImageFile.FileName);
-                var uploadFolder = Path.Combine(_env.WebRootPath, "images", "products");
-                var uploadPath = Path.Combine(uploadFolder, fileName);
-                using (FileStream fs = System.IO.File.Create(uploadPath))
+                using (var memoryStream = new MemoryStream())
                 {
-                    product.ImageFile.CopyTo(fs);
-                    fs.Flush();
+                    await product.ImageFile.CopyToAsync(memoryStream);
+                    var imageData = memoryStream.ToArray();
+                    string base64String = Convert.ToBase64String(imageData);
+                    product.Image = base64String;
+                    //_context.Products.Update(product);
+                    await _context.SaveChangesAsync();
                 }
-                product.Image = fileName;
-                _context.Products.Update(product);
-                _context.SaveChanges();
             }
             return product.Id;
         }
@@ -60,27 +52,130 @@ namespace Backend.Repository
             }
         }
 
-        public async Task<List<Product>> getAllProductAsync()
+
+        public async Task<List<Product>> getAllProductPagination(int page, int Limit, string filter, int? brandId, int? categoryId)
         {
-            return await _context.Products.ToListAsync();
+            IQueryable<Product> query = _context.Products.Include(p => p.Brand).Include(p => p.Category);
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == brandId);
+            }
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId);
+            }
+            // Áp dụng các bộ lọc
+            switch (filter.ToLower())
+            {               
+                case "new":
+                    query = query.OrderByDescending(p => p.CreateDate);
+                    break;
+                case "name-asc":
+                    query = query.OrderBy(p => p.Name);
+                    break;
+                case "name-desc":
+                    query = query.OrderByDescending(p => p.Name);
+                    break;
+                case "price-asc":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                case "price-desc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    query = query.OrderBy(p => p.Id);
+                    break;
+            }
+
+            return await query
+                .Skip((page - 1) * Limit)
+                .Take(Limit)
+                .ToListAsync();
+
+        }
+        public async Task<int> getTotalProductsCountAsync(string filter, int? brandId,int? categoryId)
+        {
+            IQueryable<Product> query = _context.Products;
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == brandId);
+            }
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId);
+            }
+            // Áp dụng các bộ lọc
+            switch (filter.ToLower())
+            {               
+                case "new":
+                    query = query.OrderByDescending(p => p.CreateDate);
+                    break;        
+                case "name-asc":
+                    query = query.OrderBy(p => p.Name);
+                    break;
+                case "name-desc":
+                    query = query.OrderByDescending(p => p.Name);
+                    break;
+                case "price-asc":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                case "price-desc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    query = query.OrderBy(p => p.Id);
+                    break;
+            }
+
+            return await query.CountAsync();
         }
 
         public async Task<Product> getProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products
+                             .Include(p => p.Brand)
+                             .Include(p => p.Category)
+                             .FirstOrDefaultAsync(p => p.Id == id);
 
         }
 
-        public async Task updateProductAsync(int id, Product product)
+        public async Task updateProductAsync(int id,Product product)
         {
-            if (id == product.Id)
+            var existingProduct = await _context.Products.FindAsync(product.Id);
+
+            if (existingProduct == null)
             {
-                //var updateProduct = _mapper.Map<Product>(product);
-                //_context.Products.Update(updateProduct);
-                //await _context.SaveChangesAsync();
-                _context.Products.Update(product);
-                await _context.SaveChangesAsync();
+                // Xử lý khi sản phẩm không tồn tại
+                return;
             }
+            
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+            existingProduct.Quantity = product.Quantity;
+            existingProduct.Image = product.Image;
+            existingProduct.SKU = product.SKU;
+            existingProduct.Status = product.Status;
+            existingProduct.BrandId = product.BrandId;
+            existingProduct.CategoryId = product.CategoryId;
+            if (product.ImageFile != null && product.ImageFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await product.ImageFile.CopyToAsync(memoryStream);
+                    var imageData = memoryStream.ToArray();
+                    string base64String = Convert.ToBase64String(imageData);
+                    existingProduct.Image = base64String;
+                }
+            }
+
+            _context.Products.Update(existingProduct);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Product>> getAllProductAsync()
+        {
+            return await _context.Products.ToListAsync();
         }
     }
 }

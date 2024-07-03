@@ -47,8 +47,7 @@ namespace Backend.Repository
             if (existingCategory != null)
             { 
                 existingCategory.Name = category.Name;
-                existingCategory.Description = category.Description;
-                existingCategory.Status= category.Status;
+               
                 await _context.SaveChangesAsync();
             }
             else

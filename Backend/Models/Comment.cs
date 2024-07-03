@@ -17,19 +17,18 @@ namespace Backend.Models
 
         [DisplayName("Ngày")]
         public DateTime Date { get; set; }
-
         [DisplayName("Trạng Thái")]
         public Boolean Status { get; set; }
-        //[DisplayName("Sản phẩm")]
-        //public int ProductId { get; set; }
-        //public Product? Product { get; set; }
+        [DisplayName("Sản phẩm")]
+        public int ProductId { get; set; }
+        public Product? Product { get; set; }
 
-        //[DisplayName("Bình Luận")]
-        //[ForeignKey("ParentCommentId")]
-        //public int? ParentCommentId { get; set; }
-        //public Comment? ParentComment { get; set; }
-        //[DisplayName("Người Dùng")]
-        //[ForeignKey("UserId")]
-        //public User? User { get; set; }
+        [DisplayName("Bình Luận")]
+        [ForeignKey("ParentCommentId")]
+        public int? ParentCommentId { get; set; }
+        public Comment? ParentComment { get; set; }
+        [DisplayName("Người Dùng")]
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
     }
 }

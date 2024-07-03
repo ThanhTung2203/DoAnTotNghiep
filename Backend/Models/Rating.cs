@@ -27,10 +27,10 @@ namespace Backend.Models
         [DisplayName("Người Dùng")]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [DisplayName("Điện Thoại")]
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

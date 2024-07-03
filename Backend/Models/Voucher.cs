@@ -12,6 +12,7 @@ namespace Backend.Models
 
         [DisplayName("Mã Voucher")]
         public string VoucherCode { get; set; }
+        public int TotalVoucher { get; set; }
 
         [DisplayName("Giảm Giá")]
         public string Discount { get; set; }
@@ -27,7 +28,6 @@ namespace Backend.Models
 
         [DisplayName("Trạng Thái")]
         public Boolean Status { get; set; }
-        public User? User { get; set; } 
-        public Invoice? Invoice { get; set; }
+
     }
 }

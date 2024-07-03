@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Backend.Dto;
+using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Models;
 using Backend.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Backend.Controllers
 {
@@ -20,6 +23,7 @@ namespace Backend.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task<IEnumerable<Comment>> GetComments( )
         {
             return await _commentsRepo.GetComments();
@@ -27,11 +31,13 @@ namespace Backend.Controllers
 
         }
         [HttpGet("{id}")]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task<Comment> GetComment(int id)
         {
             return await _commentsRepo.GetComment(id);
         }
         [HttpPost]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task<IActionResult> PostComment(CommentDto commentDto)
         {
             try
@@ -47,6 +53,7 @@ namespace Backend.Controllers
 
         }
         [HttpPut]
+        [Authorize(Roles = ApplicationRole.User)]
         public async Task UpdateComment(Comment comment)
         {
             try
@@ -59,6 +66,7 @@ namespace Backend.Controllers
             }
         }
         [HttpDelete]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task DeleteComment(int id)
         {
             try

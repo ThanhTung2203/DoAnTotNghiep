@@ -14,6 +14,8 @@ namespace Backend.Models
         [DisplayName("Tên phương thức thanh toán")]
         public string Method { get; set; }
         [DisplayName("Trạng thái")]
-        public Boolean Status { get; set; }    
+        public string PaymentStatus { get; set; }
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
     }
 }

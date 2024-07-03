@@ -31,14 +31,7 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddVoucherAsync(VoucherDto voucherDto)
         {
-            //try
-            //{
-            //    await _voucherRepo.AddVoucherAsync(voucher);
-            //}
-            //catch (Exception ex)
-            //{
-            //    BadRequest(ex.Message);
-            //}
+           
             try
             {
                 var voucher = _mapper.Map<Voucher>(voucherDto);
